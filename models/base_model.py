@@ -13,10 +13,21 @@ class BaseModel():
     and methods for other classes
     """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """
         Instantiate new object
+        If kwargs is not empty, updates attributes from kwargs.
+        Otherwise, creates id and created_at as before.
         """
+        if kwargs:
+            for k, v in kwargs.items():
+                if k in ['created_at', 'updated_at']:
+                    setattr(self, k, datetime.fromisoformat(v))
+                else:
+                    if k != '__class__':
+                        setattr(self, k, v)
+            return
+
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()

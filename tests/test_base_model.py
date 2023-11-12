@@ -5,6 +5,7 @@ Unittests for the BaseModel class.
 
 from models.base_model import BaseModel
 import unittest
+from datetime import datetime
 
 
 class TestBaseModel(unittest.TestCase):
@@ -53,6 +54,22 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(obj_dict['created_at'], b.created_at.isoformat())
         self.assertEqual(obj_dict['updated_at'], b.updated_at.isoformat())
         self.assertEqual(obj_dict['name'], "My First Model")
+
+    def test_create_instance_from_dict(self):
+        """
+        Test the creation of a BaseModel instance from dictionary
+        """
+        b = BaseModel()
+        b.name = "My First Model"
+
+        obj_dict = b.to_dict()
+        new_b = BaseModel(**obj_dict)
+
+        self.assertEqual(new_b.id, b.id)
+        self.assertEqual(new_b.__class__.__name__, 'BaseModel')
+        self.assertEqual(new_b.created_at, datetime.fromisoformat(obj_dict['created_at']))
+        self.assertEqual(new_b.updated_at, datetime.fromisoformat(obj_dict['updated_at']))
+        self.assertEqual(new_b.name, b.name)
 
 
 if __name__ == "__main__":
