@@ -1,6 +1,4 @@
 #!/usr/bin/python3
 """
-__init__.py file to intialize importing package
+Module: __init__.py
 """
-
-from models.base_model import BaseModel
