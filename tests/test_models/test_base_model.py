@@ -47,13 +47,13 @@ class TestBaseModel(unittest.TestCase):
         b = BaseModel()
         b.name = "My First Model"
 
-        obj_dict = b.to_dict()
+        o = b.to_dict()
 
-        self.assertEqual(obj_dict['id'], b.id)
-        self.assertEqual(obj_dict['__class__'], 'BaseModel')
-        self.assertEqual(obj_dict['created_at'], b.created_at.isoformat())
-        self.assertEqual(obj_dict['updated_at'], b.updated_at.isoformat())
-        self.assertEqual(obj_dict['name'], "My First Model")
+        self.assertEqual(o['id'], b.id)
+        self.assertEqual(o['__class__'], 'BaseModel')
+        self.assertEqual(o['created_at'], b.created_at.isoformat())
+        self.assertEqual(o['updated_at'], b.updated_at.isoformat())
+        self.assertEqual(o['name'], "My First Model")
 
     def test_create_instance_from_dict(self):
         """
@@ -62,13 +62,15 @@ class TestBaseModel(unittest.TestCase):
         b = BaseModel()
         b.name = "My First Model"
 
-        obj_dict = b.to_dict()
+        obj = b.to_dict()
         new_b = BaseModel(**obj_dict)
 
         self.assertEqual(new_b.id, b.id)
         self.assertEqual(new_b.__class__.__name__, 'BaseModel')
-        self.assertEqual(new_b.created_at, datetime.fromisoformat(obj_dict['created_at']))
-        self.assertEqual(new_b.updated_at, datetime.fromisoformat(obj_dict['updated_at']))
+        c = new_b.created_at
+        u = new_b.updated_at
+        self.assertEqual(c, datetime.fromisoformat(obj['created_at']))
+        self.assertEqual(u, datetime.fromisoformat(obj['updated_at']))
         self.assertEqual(new_b.name, b.name)
 
 
