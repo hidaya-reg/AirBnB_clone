@@ -42,7 +42,7 @@ class FileStorage():
         if not os.path.exists(FileStorage.__file_path):
             return
         
-        with open(self.__file_path, 'r') as f:
+        with open(FileStorage.__file_path, 'r') as f:
             data = None
 
             try:
