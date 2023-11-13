@@ -29,10 +29,12 @@ class FileStorage():
 
     def save(self):
         """Serializes __objects to the JSON file."""
-        itms = FileStorage.__objects.items()
-        serialized_objs = {k: obj.to_dict() for k, obj in itms}
+        serialized_objects = {}
+        for key, value in FileStorage.__objects.items():
+            serialized_objects[key] = value.to_dict()
+
         with open(FileStorage.__file_path, 'w') as f:
-            json.dump(serialized_objs, f)
+            json.dump(serialized_objects, f)
 
     def reload(self):
         """Deserializes the JSON file to __objects."""
@@ -44,7 +46,7 @@ class FileStorage():
             data = None
 
             try:
-                data = json.loads(f.read())
+                data = json.load(f)
             except json.JSONDecodeError:
                 pass
 
