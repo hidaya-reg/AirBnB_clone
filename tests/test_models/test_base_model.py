@@ -63,7 +63,7 @@ class TestBaseModel(unittest.TestCase):
         b.name = "My First Model"
 
         obj = b.to_dict()
-        new_b = BaseModel(**obj_dict)
+        new_b = BaseModel(**obj)
 
         self.assertEqual(new_b.id, b.id)
         self.assertEqual(new_b.__class__.__name__, 'BaseModel')
