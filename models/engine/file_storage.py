@@ -36,7 +36,7 @@ class FileStorage():
         """Deserializes the JSON file"""
         current_classes = {'BaseModel': BaseModel, 'User': User}
 
-        if not os.path.exists(FileStorage.__file_path):
+        if not path.exists(FileStorage.__file_path):
             return
 
         with open(FileStorage.__file_path, 'r') as f:
