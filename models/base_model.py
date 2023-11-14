@@ -25,6 +25,8 @@ class BaseModel():
                     continue
                 if k in ['created_at', 'updated_at']:
                     v = datetime.fromisoformat(v)
+                if k[0] == "id":
+                    v = str(v)
                 setattr(self, k, v)
             return
 

@@ -37,8 +37,8 @@ class FileStorage():
         try:
             with open(self.__file_path, 'r') as f:
                 data = json.loads(f.read())
-                for value in data.values():
+                for v in data.values():
                     cls = value["__class__"]
-                    self.new(eval(cls)(**value))
+                    self.new(eval(cls)(**v))
         except Exception:
             pass
