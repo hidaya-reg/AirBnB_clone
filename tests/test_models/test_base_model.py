@@ -6,6 +6,9 @@ Unittests for the BaseModel class.
 from models.base_model import BaseModel
 import unittest
 from datetime import datetime
+from models.engine.file_storage import FileStorage
+import os
+import json
 
 
 class TestBaseModel(unittest.TestCase):
@@ -72,7 +75,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(c, datetime.fromisoformat(obj['created_at']))
         self.assertEqual(u, datetime.fromisoformat(obj['updated_at']))
         self.assertEqual(new_b.name, b.name)
-
 
 if __name__ == "__main__":
     unittest.main()
