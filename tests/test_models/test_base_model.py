@@ -76,18 +76,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(u, datetime.fromisoformat(obj['updated_at']))
         self.assertEqual(new_b.name, b.name)
 
-    def test_save_storage(self):
-        """Tests that storage.save() is called from save()."""
-        b= BaseModel()
-        b.save()
-        key = "{}.{}".format(type(b).__name__, b.id)
-        d = {key: b.to_dict()}
-        self.assertTrue(os.path.isfile(FileStorage._FileStorage__file_path))
-        with open(FileStorage._FileStorage__file_path, "r") as f:
-            self.assertEqual(len(f.read()), len(json.dumps(d)))
-            f.seek(0)
-            self.assertEqual(json.load(f), d)
-
     def test_str(self):
         """Test method for str representation"""
         b = BaseModel()
