@@ -50,6 +50,6 @@ class FileStorage():
             if data is None:
                 return
 
-            for k, v in data.items():
-                current_class = k.split('.')[0]
-                FileStorage.__objects[k] = all_classes[current_class](**v)
+            FileStorage.__objects = {
+                k: current_classes[k.split('.')[0]](**v)
+                for k, v in deserialized.items()}
