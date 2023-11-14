@@ -24,21 +24,20 @@ class FileStorage():
 
     def new(self, obj):
         """Sets in __objects the obj with key <obj class name>.id."""
-        self.__objects[obj.__class__.__name__ + '.' + str(obj)] = obj
+        key = "{}.{}".format(type(obj).__name__, obj.id)
+        self.__objects[key] = obj
 
     def save(self):
         """Serializes __objects to the JSON file."""
-        json_dict = {}
-        for k, v in self.__objects.items():
-            json_dict[k] = v.to_dict()
-        with open(self.__file_path, 'w', encoding='utf-8') as f:
-            f.write(json.dumps(json_dict))
+        with open(self.__file_path, 'w') as f:
+            json.dump(
+                {k: v.to_dict() for k, v in self.__objects.items()}, f)
 
     def reload(self):
         """Deserializes the JSON file"""
         current_classes = {'BaseModel': BaseModel, 'User': User}
 
-        if not path.exists(FileStorage.__file_path):
+        if not path.exists(self.__file_path):
             return
 
         with open(self.__file_path, 'r') as f:
@@ -52,6 +51,6 @@ class FileStorage():
             if deserialized is None:
                 return
 
-            FileStorage.__objects = {
+            self.__objects = {
                 k: current_classes[k.split('.')[0]](**v)
                 for k, v in deserialized.items()}
